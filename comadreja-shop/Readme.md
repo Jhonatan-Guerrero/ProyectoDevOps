@@ -21,6 +21,8 @@ Antes de empezar necesitas:
 * Git instalado
 * VS Code (recomendado)
 
+* INGRESA A TU CONSOLA DE GIT BASH
+
 Verifica:
 
 ```bash
