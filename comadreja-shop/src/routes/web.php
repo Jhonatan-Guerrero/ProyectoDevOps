@@ -19,3 +19,7 @@ Route::post('/logout', function () {
     auth()->logout();
     return redirect('/login');
 })->name('logout');
+
+use App\Livewire\Profile\EditProfile;
+
+Route::get('/profile', EditProfile::class)->middleware('auth')->name('profile');
