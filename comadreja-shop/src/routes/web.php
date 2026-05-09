@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Auth\Register;
 use App\Livewire\Auth\Login;
+use App\Livewire\Profile\EditProfile;
+use App\Livewire\Products\CreateProduct;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -11,15 +13,24 @@ Route::get('/', function () {
 Route::get('/register', Register::class)->name('register');
 Route::get('/login', Login::class)->name('login');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
-
 Route::post('/logout', function () {
     auth()->logout();
     return redirect('/login');
 })->name('logout');
 
-use App\Livewire\Profile\EditProfile;
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-Route::get('/profile', EditProfile::class)->middleware('auth')->name('profile');
+    Route::get('/profile', EditProfile::class)->name('profile');
+    Route::get('/products/create', CreateProduct::class)->name('products.create');
+});
+
+use App\Livewire\Products\ProductList;
+
+Route::get('/products', ProductList::class)->middleware('auth')->name('products.index');
+
+use App\Livewire\Products\EditProduct;
+
+Route::get('/products/{product}/edit', EditProduct::class)->middleware('auth')->name('products.edit');
