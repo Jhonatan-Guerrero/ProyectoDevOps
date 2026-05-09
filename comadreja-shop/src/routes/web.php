@@ -34,3 +34,7 @@ Route::get('/products', ProductList::class)->middleware('auth')->name('products.
 use App\Livewire\Products\EditProduct;
 
 Route::get('/products/{product}/edit', EditProduct::class)->middleware('auth')->name('products.edit');
+
+use App\Livewire\Catalog\ProductCatalog;
+
+Route::get('/catalog', ProductCatalog::class)->name('catalog');
