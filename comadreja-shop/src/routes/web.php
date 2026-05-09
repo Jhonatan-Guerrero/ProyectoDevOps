@@ -38,3 +38,7 @@ Route::get('/products/{product}/edit', EditProduct::class)->middleware('auth')->
 use App\Livewire\Catalog\ProductCatalog;
 
 Route::get('/catalog', ProductCatalog::class)->name('catalog');
+
+use App\Livewire\Catalog\ProductDetail;
+
+Route::get('/catalog/{product}', ProductDetail::class)->name('catalog.show');
