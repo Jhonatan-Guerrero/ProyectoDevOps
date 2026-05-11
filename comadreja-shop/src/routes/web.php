@@ -42,3 +42,7 @@ Route::get('/catalog', ProductCatalog::class)->name('catalog');
 use App\Livewire\Catalog\ProductDetail;
 
 Route::get('/catalog/{product}', ProductDetail::class)->name('catalog.show');
+
+use App\Livewire\Cart\ShoppingCart;
+
+Route::get('/cart', ShoppingCart::class)->middleware('auth')->name('cart');
