@@ -30,3 +30,6 @@ return new class extends Migration
         Schema::dropIfExists('cart_items');
     }
 };
+
+
+//alguna modificacion oara ver si es eso
