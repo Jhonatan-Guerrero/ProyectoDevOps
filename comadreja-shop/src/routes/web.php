@@ -46,3 +46,16 @@ Route::get('/catalog/{product}', ProductDetail::class)->name('catalog.show');
 use App\Livewire\Cart\ShoppingCart;
 
 Route::get('/cart', ShoppingCart::class)->middleware('auth')->name('cart');
+
+use App\Livewire\Checkout\CheckoutForm;
+
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout', CheckoutForm::class)->name('checkout');
+    Route::get('/checkout/confirm', function () {
+        return view('checkout-confirm');
+    })->name('checkout.confirm');
+});
+
+use App\Livewire\Pedidos\MisPedidos;
+
+Route::get('/orders', MisPedidos::class)->middleware('auth')->name('orders');
