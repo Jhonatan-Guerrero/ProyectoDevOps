@@ -59,3 +59,11 @@ Route::middleware('auth')->group(function () {
 use App\Livewire\Pedidos\MisPedidos;
 
 Route::get('/orders', MisPedidos::class)->middleware('auth')->name('orders');
+
+use App\Livewire\Pedidos\PedidosVendedor;
+
+Route::get('/vendor/orders', PedidosVendedor::class)->middleware('auth')->name('vendor.orders');
+
+use App\Livewire\Pedidos\DetallePedido;
+
+Route::get('/vendor/orders/{pedido}', DetallePedido::class)->middleware('auth')->name('vendor.orders.show');
