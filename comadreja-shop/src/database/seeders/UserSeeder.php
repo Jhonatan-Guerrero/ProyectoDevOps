@@ -35,3 +35,8 @@ class UserSeeder extends Seeder
         ]);
     }
 }
+
+##Para ejecutar Seeders usar los siguientes comandos:
+## winpty docker exec -it comadreja_app bash
+##Enseguida una vez dentro del contenedor ejecutar:
+## php artisan migrate:fresh --seed
