@@ -1,6 +1,6 @@
 <div class="min-h-screen" style="background-color: #F9FAFB; font-family: 'Inter', sans-serif;">
 
-    <nav class="w-full px-6 py-3 flex items-center justify-between" style="background-color: #B9EBD7;">
+    @include('partials.navbar') <div style="display:none">
         <h1 class="text-lg font-bold" style="color: #111827;">Comadreja Shop</h1>
         <div class="flex-1 mx-6">
             <div class="flex items-center" style="background:white; border-radius:10px; border:1px solid #9DD4C0; padding: 6px 14px; max-width: 400px;">

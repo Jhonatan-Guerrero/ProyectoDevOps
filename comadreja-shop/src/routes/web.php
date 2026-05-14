@@ -67,3 +67,7 @@ Route::get('/vendor/orders', PedidosVendedor::class)->middleware('auth')->name('
 use App\Livewire\Pedidos\DetallePedido;
 
 Route::get('/vendor/orders/{pedido}', DetallePedido::class)->middleware('auth')->name('vendor.orders.show');
+
+use App\Livewire\Profile\EditarPerfil;
+
+Route::get('/profile/edit', EditarPerfil::class)->middleware('auth')->name('profile.edit');

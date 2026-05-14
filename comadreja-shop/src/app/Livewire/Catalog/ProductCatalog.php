@@ -13,6 +13,11 @@ class ProductCatalog extends Component
     public string $min_price = '';
     public string $max_price = '';
 
+    public function mount(): void
+    {
+        $this->search = request()->get('search', '');
+    }
+
     public function render()
     {
         $query = Product::where('active', true)

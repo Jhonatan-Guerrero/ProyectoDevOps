@@ -1,6 +1,6 @@
 <div class="min-h-screen" style="background-color: #F9FAFB; font-family: 'Inter', sans-serif;">
 
-    <nav class="w-full px-6 py-3 flex items-center justify-between" style="background-color: #B9EBD7;">
+    @include('partials.navbar') <div style="display:none">
         <h1 class="text-lg font-bold" style="color: #111827;">Comadreja Shop</h1>
         <div class="flex items-center gap-3">
             <span class="text-sm font-medium" style="color:#111827;">{{ auth()->user()->name }}</span>

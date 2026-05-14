@@ -2,12 +2,11 @@
 
 namespace App\Livewire\Profile;
 
-use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
-class EditProfile extends Component
+class EditarPerfil extends Component
 {
     public string $name = '';
     public string $password = '';
@@ -28,7 +27,6 @@ class EditProfile extends Component
 
     protected array $messages = [
         'name.required'      => 'El nombre es obligatorio.',
-        'name.max'           => 'El nombre no puede tener mas de 255 caracteres.',
         'password.min'       => 'La contrasena debe tener al menos 8 caracteres.',
         'password.confirmed' => 'Las contrasenas no coinciden.',
     ];
@@ -50,17 +48,12 @@ class EditProfile extends Component
         $this->password_confirmation = '';
 
         session()->flash('success', 'Perfil actualizado correctamente.');
+        $this->redirect(route('profile'));
     }
 
     public function render()
     {
-        $pedidos = Order::where('user_id', Auth::id())
-            ->latest()
-            ->take(3)
-            ->get();
-
-        return view('livewire.profile.edit-profile', [
-            'pedidos' => $pedidos,
-        ])->layout('layouts.guest');
+        return view('livewire.profile.editar-perfil')
+            ->layout('layouts.guest');
     }
 }
