@@ -1,36 +1,10 @@
 <div class="min-h-screen" style="background-color: #F9FAFB; font-family: 'Inter', sans-serif;">
 
-    @include('partials.navbar') <div style="display:none">
-        <h1 class="text-lg font-bold" style="color: #111827;">Comadreja Shop</h1>
-        <div class="flex-1 mx-6">
-            <div class="flex items-center" style="background:white; border-radius:10px; border:1px solid #9DD4C0; padding: 6px 14px; max-width: 400px;">
-                <input type="text" placeholder="Buscar productos..." class="outline-none text-sm w-full" style="color:#111827; background:transparent;">
-            </div>
-        </div>
-        <div class="flex items-center gap-3">
-            <span class="text-sm font-medium" style="color:#111827;">{{ auth()->user()->name }}</span>
-            <form method="POST" action="/logout">
-                @csrf
-                <button type="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="#111827">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1"/>
-                    </svg>
-                </button>
-            </form>
-        </div>
-    </nav>
+    @include('partials.navbar')
 
     <div class="flex">
         <aside class="w-52 min-h-screen pt-4 px-2" style="background-color: white; border-right: 1px solid #E5E7EB;">
             <ul class="space-y-1">
-                <li>
-                    <a href="/dashboard" class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm" style="color:#111827;">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                        Dashboard
-                    </a>
-                </li>
                 <li>
                     <a href="/products" class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm" style="color:#111827;">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -88,20 +62,12 @@
                                 <td class="px-4 py-3 font-medium" style="color:#111827;">${{ number_format($pedido->total, 2) }}</td>
                                 <td class="px-4 py-3">
                                     <span class="px-2 py-1 rounded-full text-xs font-medium"
-                                        style="
-                                        @if($pedido->status == 'pendiente') background-color:#FEF3C7; color:#92400E;
-                                        @elseif($pedido->status == 'en_preparacion') background-color:#DBEAFE; color:#1E40AF;
-                                        @elseif($pedido->status == 'enviado') background-color:#E0E7FF; color:#3730A3;
-                                        @else background-color:#D1FAE5; color:#065F46;
-                                        @endif
-                                        ">
+                                        style="@if($pedido->status == 'pendiente') background-color:#FEF3C7; color:#92400E; @elseif($pedido->status == 'en_preparacion') background-color:#DBEAFE; color:#1E40AF; @elseif($pedido->status == 'enviado') background-color:#E0E7FF; color:#3730A3; @else background-color:#D1FAE5; color:#065F46; @endif">
                                         {{ ucfirst(str_replace('_', ' ', $pedido->status)) }}
                                     </span>
                                 </td>
                                 <td class="px-4 py-3">
-                                    <a href="/vendor/orders/{{ $pedido->id }}"
-                                        class="px-3 py-1 text-white text-xs rounded-lg"
-                                        style="background-color:#2563EB;">
+                                    <a href="/vendor/orders/{{ $pedido->id }}" class="px-3 py-1 text-white text-xs rounded-lg" style="background-color:#2563EB;">
                                         Ver detalle
                                     </a>
                                 </td>

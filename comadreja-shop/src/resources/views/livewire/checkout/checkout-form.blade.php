@@ -1,15 +1,6 @@
 <div class="min-h-screen" style="background-color: #F9FAFB; font-family: 'Inter', sans-serif;">
 
-    @include('partials.navbar') <div style="display:none">
-        <h1 class="text-lg font-bold" style="color: #111827;">Comadreja Shop</h1>
-        <div class="flex items-center gap-3">
-            <span class="text-sm font-medium" style="color:#111827;">{{ auth()->user()->name }}</span>
-            <form method="POST" action="/logout">
-                @csrf
-                <button type="submit" class="text-sm" style="color:#111827;">Salir</button>
-            </form>
-        </div>
-    </nav>
+    @include('partials.navbar')
 
     <main class="max-w-4xl mx-auto px-8 py-10">
         <h2 class="text-2xl font-bold mb-6" style="color:#111827;">Checkout</h2>
@@ -30,7 +21,6 @@
 
         <div class="flex gap-6">
             <div class="flex-1">
-
                 @if($step == 1)
                 <div class="bg-white rounded-xl p-6" style="border:1px solid #E5E7EB;">
                     <h3 class="font-bold mb-4" style="color:#111827;">Informacion de Envio</h3>
@@ -70,7 +60,7 @@
 
                 @if($step == 2)
                 <div class="bg-white rounded-xl p-6" style="border:1px solid #E5E7EB;">
-                    <h3 class="font-bold mb-4" style="color:#111827;">Infromacion de Pago</h3>
+                    <h3 class="font-bold mb-4" style="color:#111827;">Informacion de Pago</h3>
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm mb-1" style="color:#111827;">Numero de tarjeta</label>

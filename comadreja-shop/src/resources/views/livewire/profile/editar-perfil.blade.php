@@ -1,19 +1,6 @@
 <div class="min-h-screen" style="background-color: #F9FAFB; font-family: 'Inter', sans-serif;">
 
-    @include('partials.navbar') <div style="display:none">
-        <h1 class="text-lg font-bold" style="color: #111827;">Comadreja Shop</h1>
-        <div class="flex items-center gap-3">
-            <span class="text-sm font-medium" style="color:#111827;">{{ auth()->user()->name }}</span>
-            <form method="POST" action="/logout">
-                @csrf
-                <button type="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="#111827">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1"/>
-                    </svg>
-                </button>
-            </form>
-        </div>
-    </nav>
+    @include('partials.navbar')
 
     <div class="flex">
         <aside class="w-52 min-h-screen pt-4 px-2" style="background-color: white; border-right: 1px solid #E5E7EB;">
