@@ -21,9 +21,9 @@ class Login extends Component
 
     protected array $messages = [
         'email.required'    => 'El correo es obligatorio.',
-        'email.email'       => 'Ingresa un correo válido.',
-        'password.required' => 'La contraseña es obligatoria.',
-        'password.min'      => 'La contraseña debe tener al menos 8 caracteres.',
+        'email.email'       => 'Ingresa un correo valido.',
+        'password.required' => 'La contrasena es obligatoria.',
+        'password.min'      => 'La contrasena debe tener al menos 8 caracteres.',
     ];
 
     public function login(): void
@@ -37,7 +37,15 @@ class Login extends Component
 
         session()->regenerate();
 
-        $this->redirect(route('dashboard'), navigate: true);
+        $role = Auth::user()->role;
+
+        if ($role === 'admin') {
+            $this->redirect('/admin');
+        } elseif ($role === 'vendedor') {
+            $this->redirect('/vendor/dashboard');
+        } else {
+            $this->redirect('/catalog');
+        }
     }
 
     public function render()

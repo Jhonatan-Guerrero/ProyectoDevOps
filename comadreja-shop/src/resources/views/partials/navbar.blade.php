@@ -1,7 +1,13 @@
 <nav class="w-full px-6 py-3 flex items-center justify-between" style="background-color: #B9EBD7;">
-    <a href="/catalog">
-        <h1 class="text-lg font-bold" style="color: #111827;">Comadreja Shop</h1>
-    </a>
+    @auth
+        <a href="{{ auth()->user()->role === 'vendedor' ? '/vendor/dashboard' : (auth()->user()->role === 'admin' ? '/admin' : '/catalog') }}">
+            <h1 class="text-lg font-bold" style="color: #111827;">Comadreja Shop</h1>
+        </a>
+    @else
+        <a href="/catalog">
+            <h1 class="text-lg font-bold" style="color: #111827;">Comadreja Shop</h1>
+        </a>
+    @endauth
     <div class="flex-1 mx-6">
         <form action="/catalog" method="GET">
             <div class="flex items-center" style="background:white; border-radius:10px; border:1px solid #9DD4C0; padding: 6px 14px; max-width: 400px;">
@@ -16,7 +22,7 @@
         </form>
     </div>
     <div class="flex items-center gap-3">
-        <a href="/cart" class="relative">
+        <a href="/cart">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="#111827">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M10 21a1 1 0 1 0 2 0M17 21a1 1 0 1 0 2 0"/>
             </svg>
