@@ -10,6 +10,11 @@
 </head>
 <body style="font-family: 'Inter', sans-serif; background-color: #F9FAFB;">
     {{ $slot }}
+    @auth
+        @if(auth()->user()->role !== 'admin')
+            <livewire:chatbot.chat-flotante />
+        @endif
+    @endauth
     @livewireScripts
 </body>
 </html>

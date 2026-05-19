@@ -50,7 +50,11 @@ class Register extends Component
 
         Auth::login($user);
 
-        $this->redirect('/catalog');
+        if ($user->role === 'vendedor') {
+            $this->redirect('/vendor/dashboard');
+        } else {
+            $this->redirect('/catalog');
+        }
     }
 
     public function render()

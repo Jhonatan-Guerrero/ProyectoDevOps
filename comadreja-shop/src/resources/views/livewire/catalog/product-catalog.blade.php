@@ -3,7 +3,6 @@
     @include('partials.navbar')
 
     <div class="flex">
-        {{-- Sidebar --}}
         <aside class="w-52 min-h-screen pt-4 px-2" style="background-color: white; border-right: 1px solid #E5E7EB;">
             <ul class="space-y-1">
                 <li>
@@ -41,22 +40,16 @@
             </ul>
         </aside>
 
-        {{-- Contenido --}}
         <main class="flex-1 p-8">
-
-            {{-- Hero --}}
             <div class="text-center py-8 px-4 rounded-xl mb-6" style="background-color: #F0FAF6;">
                 <h2 class="text-3xl font-bold" style="color:#111827;">Bienvenido a Comadreja Shop</h2>
                 <p class="mt-2 text-sm" style="color:#6B7280;">Encuentra los mejores productos al mejor precio</p>
             </div>
 
-            {{-- Filtros --}}
             <div class="flex gap-4 items-end flex-wrap mb-6 p-4 bg-white rounded-xl" style="border:1px solid #E5E7EB;">
                 <div>
                     <label class="block text-xs mb-1" style="color:#6B7280;">Categoria</label>
-                    <select wire:model.live="category_id"
-                        class="px-3 py-2 text-sm outline-none"
-                        style="border:1px solid #D1D5DB; border-radius:6px; color:#111827; min-width:180px;">
+                    <select wire:model.live="category_id" class="px-3 py-2 text-sm outline-none" style="border:1px solid #D1D5DB; border-radius:6px; color:#111827; min-width:180px;">
                         <option value="">Todas las categorias</option>
                         @foreach($categories as $cat)
                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
@@ -65,15 +58,11 @@
                 </div>
                 <div>
                     <label class="block text-xs mb-1" style="color:#6B7280;">Precio minimo</label>
-                    <input wire:model.live="min_price" type="number" placeholder="$0"
-                        class="px-3 py-2 text-sm outline-none"
-                        style="border:1px solid #D1D5DB; border-radius:6px; color:#111827; width:120px;">
+                    <input wire:model.live="min_price" type="number" placeholder="$0" class="px-3 py-2 text-sm outline-none" style="border:1px solid #D1D5DB; border-radius:6px; color:#111827; width:120px;">
                 </div>
                 <div>
                     <label class="block text-xs mb-1" style="color:#6B7280;">Precio maximo</label>
-                    <input wire:model.live="max_price" type="number" placeholder="$999"
-                        class="px-3 py-2 text-sm outline-none"
-                        style="border:1px solid #D1D5DB; border-radius:6px; color:#111827; width:120px;">
+                    <input wire:model.live="max_price" type="number" placeholder="$999" class="px-3 py-2 text-sm outline-none" style="border:1px solid #D1D5DB; border-radius:6px; color:#111827; width:120px;">
                 </div>
             </div>
 
@@ -81,7 +70,6 @@
                 <p class="text-sm mb-4" style="color:#6B7280;">Resultados para: <span class="font-medium" style="color:#111827;">"{{ $search }}"</span></p>
             @endif
 
-            {{-- Productos --}}
             @if($products->isEmpty())
                 <div class="text-center py-16 bg-white rounded-xl" style="border:1px solid #E5E7EB;">
                     <p class="text-lg" style="color:#6B7280;">No se encontraron productos.</p>
@@ -90,11 +78,21 @@
             @else
                 <div class="grid grid-cols-3 gap-6">
                     @foreach($products as $product)
-                    <div class="bg-white rounded-xl overflow-hidden" style="border:1px solid #E5E7EB;">
+                    <div class="bg-white rounded-xl overflow-hidden relative" style="border:1px solid #E5E7EB; {{ $product->stock == 0 ? 'opacity:0.7;' : '' }}">
+                        {{-- Badge agotado --}}
+                        @if($product->stock == 0)
+                            <div class="absolute top-2 left-2 z-10 px-2 py-1 rounded-full text-xs font-bold text-white" style="background-color:#EF4444;">
+                                Agotado
+                            </div>
+                        @elseif($product->stock <= 5)
+                            <div class="absolute top-2 left-2 z-10 px-2 py-1 rounded-full text-xs font-bold text-white" style="background-color:#F59E0B;">
+                                Pocas unidades
+                            </div>
+                        @endif
+
                         <div class="h-48 flex items-center justify-center" style="background:#F9FAFB;">
                             @if($product->image_url)
-                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}"
-                                    class="h-full w-full object-cover">
+                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-full w-full object-cover">
                             @else
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="#D1D5DB">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -106,11 +104,15 @@
                             <h3 class="font-medium text-sm mb-2" style="color:#111827;">{{ $product->name }}</h3>
                             <div class="flex items-center justify-between">
                                 <span class="font-bold" style="color:#111827;">${{ number_format($product->price, 2) }}</span>
-                                <a href="/catalog/{{ $product->id }}"
-                                    class="px-3 py-1 text-xs text-white rounded-lg"
-                                    style="background-color:#2563EB;">
-                                    Ver detalle
-                                </a>
+                                @if($product->stock > 0)
+                                    <a href="/catalog/{{ $product->id }}" class="px-3 py-1 text-xs text-white rounded-lg" style="background-color:#2563EB;">
+                                        Ver detalle
+                                    </a>
+                                @else
+                                    <span class="px-3 py-1 text-xs rounded-lg" style="background-color:#F3F4F6; color:#9CA3AF;">
+                                        Sin stock
+                                    </span>
+                                @endif
                             </div>
                         </div>
                     </div>

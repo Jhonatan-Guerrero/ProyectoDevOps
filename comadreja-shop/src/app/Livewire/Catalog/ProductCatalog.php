@@ -20,8 +20,7 @@ class ProductCatalog extends Component
 
     public function render()
     {
-        $query = Product::where('active', true)
-            ->with(['category', 'user']);
+        $query = Product::where('active', true)->with(['category', 'user']);
 
         if ($this->search) {
             $query->where('name', 'like', '%' . $this->search . '%');
@@ -39,8 +38,11 @@ class ProductCatalog extends Component
             $query->where('price', '<=', $this->max_price);
         }
 
+        // Primero los que tienen stock, luego los agotados
+        $query->orderByRaw('stock = 0 ASC')->latest();
+
         return view('livewire.catalog.product-catalog', [
-            'products'   => $query->latest()->get(),
+            'products'   => $query->get(),
             'categories' => Category::orderBy('name')->get(),
         ])->layout('layouts.guest');
     }
