@@ -2,41 +2,50 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('users')->insert([
-            [
-                'name' => 'Administrador',
-                'email' => 'admin@example.com',
-                'password' => Hash::make('password123'),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Juan Perez',
-                'email' => 'juan@example.com',
-                'password' => Hash::make('12345678'),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Maria Lopez',
-                'email' => 'maria@example.com',
-                'password' => Hash::make('12345678'),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        // Admin
+        User::firstOrCreate(['email' => 'admin@comadreja.com'], [
+            'name'     => 'Administrador',
+            'password' => Hash::make('admin123'),
+            'role'     => 'admin',
+            'active'   => true,
+        ]);
+
+        // Vendedores
+        User::firstOrCreate(['email' => 'adanballesillo@gmail.com'], [
+            'name'     => 'Adan Ballesillo',
+            'password' => Hash::make('vendedor123'),
+            'role'     => 'vendedor',
+            'active'   => true,
+        ]);
+
+        User::firstOrCreate(['email' => 'nh091507@gmail.com'], [
+            'name'     => 'Jhonatan Guerrero',
+            'password' => Hash::make('vendedor123'),
+            'role'     => 'vendedor',
+            'active'   => true,
+        ]);
+
+        // Compradores
+        User::firstOrCreate(['email' => 'karenmonica145@gmail.com'], [
+            'name'     => 'Karen Hernandez',
+            'password' => Hash::make('comprador123'),
+            'role'     => 'comprador',
+            'active'   => true,
+        ]);
+
+        User::firstOrCreate(['email' => 'rnaye738@gmail.com'], [
+            'name'     => 'Nayeli Hernandez',
+            'password' => Hash::make('comprador123'),
+            'role'     => 'comprador',
+            'active'   => true,
         ]);
     }
 }
-
-##Para ejecutar Seeders usar los siguientes comandos:
-## winpty docker exec -it comadreja_app bash
-##Enseguida una vez dentro del contenedor ejecutar:
-## php artisan migrate:fresh --seed

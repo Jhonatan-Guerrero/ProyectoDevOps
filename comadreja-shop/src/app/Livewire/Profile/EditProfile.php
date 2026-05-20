@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Profile;
 
+use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -27,9 +29,8 @@ class EditProfile extends Component
 
     protected array $messages = [
         'name.required'      => 'El nombre es obligatorio.',
-        'name.max'           => 'El nombre no puede tener más de 255 caracteres.',
-        'password.min'       => 'La contraseña debe tener al menos 8 caracteres.',
-        'password.confirmed' => 'Las contraseñas no coinciden.',
+        'password.min'       => 'La contrasena debe tener al menos 8 caracteres.',
+        'password.confirmed' => 'Las contrasenas no coinciden.',
     ];
 
     public function save(): void
@@ -53,6 +54,21 @@ class EditProfile extends Component
 
     public function render()
     {
-        return view('livewire.profile.edit-profile')->layout('layouts.guest');
+        $user = Auth::user();
+
+        if ($user->role === 'vendedor') {
+            $pedidos = Order::whereHas('items', function ($q) use ($user) {
+                $q->whereIn('product_id', $user->products()->pluck('id'));
+            })->with('items.product')->latest()->take(3)->get();
+        } else {
+            $pedidos = Order::where('user_id', $user->id)
+                ->latest()
+                ->take(3)
+                ->get();
+        }
+
+        return view('livewire.profile.edit-profile', [
+            'pedidos' => $pedidos,
+        ])->layout('layouts.guest');
     }
 }
