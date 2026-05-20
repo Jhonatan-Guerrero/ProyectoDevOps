@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-
 use App\Models\Category;
 use Illuminate\Database\Seeder;
 
@@ -23,11 +22,5 @@ class CategorySeeder extends Seeder
         foreach ($categories as $category) {
             Category::firstOrCreate(['name' => $category['name']], $category);
         }
-
     }
 }
-
-##Para ejecutar Seeders usar los siguientes comandos:
-## winpty docker exec -it comadreja_app bash
-##Enseguida una vez dentro del contenedor ejecutar:
-## php artisan migrate:fresh --seed

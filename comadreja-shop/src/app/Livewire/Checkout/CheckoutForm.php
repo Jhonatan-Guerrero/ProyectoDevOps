@@ -2,9 +2,13 @@
 
 namespace App\Livewire\Checkout;
 
+use App\Mail\NuevoProductoVendido;
+use App\Mail\PedidoConfirmado;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class CheckoutForm extends Component
@@ -61,7 +65,7 @@ class CheckoutForm extends Component
             return;
         }
 
-        $items = $cart->items()->with('product')->get();
+        $items = $cart->items()->with('product.user')->get();
         $total = $items->sum(fn($item) => $item->product->price * $item->quantity);
 
         $order = Order::create([
@@ -83,6 +87,15 @@ class CheckoutForm extends Component
         }
 
         $cart->items()->delete();
+
+        // Correo al comprador
+        Mail::to($order->user->email)->send(new PedidoConfirmado($order));
+
+        // Correos a los vendedores
+        $vendedores = $items->map(fn($item) => $item->product->user)->unique('id');
+        foreach ($vendedores as $vendedor) {
+            Mail::to($vendedor->email)->send(new NuevoProductoVendido($order));
+        }
 
         session()->flash('order_id', $order->id);
         session()->flash('order_total', $total);

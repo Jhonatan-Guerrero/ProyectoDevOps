@@ -8,23 +8,13 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-
-        // User::factory(10)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-         $this->call([
-        UserSeeder::class,
-        CategorySeeder::class,
-        ProductSeeder::class,
+        $this->call([
+            CategorySeeder::class,
+            UserSeeder::class,
+            ProductSeeder::class,
+            OrderSeeder::class
+            
+            
         ]);
     }
 }
-
-##Para ejecutar Seeders usar los siguientes comandos:
-## winpty docker exec -it comadreja_app bash
-##Enseguida una vez dentro del contenedor ejecutar:
-## php artisan migrate:fresh --seed
